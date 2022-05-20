@@ -1,5 +1,5 @@
 require('dotenv').config();
-var https   = require('https');
+var https = require('https');
 
 var ovh = require('ovh')({
   endpoint: process.env.APP_ENDPOINT,
@@ -8,20 +8,28 @@ var ovh = require('ovh')({
   consumerKey: process.env.CONSUMER_KEY
 });
 
-var array_index = 0
-var invoices = []
+var array_index = 0;
+var invoices = [];
 
 // This method allow to work synchronously and avoid flood and timeout issue
 function getInfos(array_index, invoices) {
-  if(array_index < invoices.length) {
-    invoice = invoices[array_index]
-    ovh.request('GET', '/me/bill/'+ invoice, function (err, file) {
-      if(err == null) {
-        console.log(invoice + ";" + file.pdfUrl + ";" + file.date + ";" + file.priceWithoutTax.value)
+  if (array_index < invoices.length) {
+    invoice = invoices[array_index];
+    ovh.request('GET', '/me/bill/' + invoice, function (err, file) {
+      if (err == null) {
+        console.log(
+          invoice +
+            ';' +
+            file.pdfUrl +
+            ';' +
+            file.date +
+            ';' +
+            file.priceWithoutTax.value
+        );
         array_index++;
-        getInfos(array_index, invoices)
+        getInfos(array_index, invoices);
       }
-    })
+    });
   }
 }
 
