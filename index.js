@@ -39,10 +39,10 @@ ovh.request(
         return { ...x, pdf: pdf.body };
       })
       .map(async x => {
-        await fs.writeFile(`./${x.billId}.pdf`, x.pdf);
+        await fs.writeFile(`/tmp/__billxm__${x.billId}.pdf`, x.pdf);
 
         const form = new FormData();
-        form.set('file', await fileFromPath(`./${x.billId}.pdf`));
+        form.set('file', await fileFromPath(`/tmp/__billxm__${x.billId}.pdf`));
         form.set('type', 'voucher');
         //return client.uploadFile(form);
 
