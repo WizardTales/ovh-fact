@@ -7,9 +7,6 @@ import got from 'got';
 import OVH from 'ovh';
 import { FormData, File, Blob } from 'formdata-node';
 import { fileFromPath } from 'formdata-node/file-from-path';
-import { Client } from '@elbstack/lexoffice-client-js';
-
-const client = new Client(process.env.LEXOFFICE);
 
 let ovh = OVH({
   endpoint: process.env.APP_ENDPOINT,
@@ -30,7 +27,7 @@ const auth = { Authorization: `Bearer ${process.env.LEXOFFICE}` };
 
 ovh.request(
   'GET',
-  `/me/bill?date.from=${moment().subtract(30, 'days').format('YYYYMMDD')}`,
+  `/me/bill?date.from=${moment().subtract(1, 'days').toISOString()}`,
   function (err, invoices) {
     Promise.resolve(invoices)
       .map(getInfos)
