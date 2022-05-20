@@ -11,3 +11,4 @@ data/*
 fuge/log
 .idea
 .DS_Store
+.env
